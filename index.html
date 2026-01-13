@@ -146,6 +146,12 @@
       background: linear-gradient(135deg, #16a34a 0%, #047857 100%);
     }
 
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: scale(1);
+    }
+
     /* Progress Bar */
     .progress-container {
       margin-bottom: 20px;
@@ -232,6 +238,60 @@
 
     .option-btn:hover .option-text {
       color: white;
+    }
+
+    /* Form Styles */
+    .form-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #e9d5ff;
+      margin-bottom: 8px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 16px 20px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-size: 16px;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.3s ease;
+    }
+
+    .form-input::placeholder {
+      color: #a78bfa;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: #a855f7;
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .form-hint {
+      font-size: 12px;
+      color: #a78bfa;
+      margin-top: 6px;
+    }
+
+    .privacy-note {
+      font-size: 12px;
+      color: #a78bfa;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .privacy-note a {
+      color: #c4b5fd;
+      text-decoration: underline;
     }
 
     /* Result Styles */
@@ -520,6 +580,26 @@
       border: 1px solid rgba(168, 85, 247, 0.4);
       margin-top: 12px;
     }
+
+    .loading-spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s ease-in-out infinite;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .welcome-name {
+      color: #f472b6;
+    }
   </style>
 </head>
 <body>
@@ -590,11 +670,39 @@
     </div>
   </div>
 
+  <!-- TELA CAPTURA DE LEAD -->
+  <div id="tela-captura" class="container hidden">
+    <div class="card text-center">
+      <div class="emojis">🎉</div>
+      <h2>Seu resultado está pronto!</h2>
+      <p class="subtitle">Digite seus dados para ver seu perfil completo de temperamento:</p>
+      
+      <form id="lead-form" onsubmit="enviarLead(event)">
+        <div class="form-group">
+          <label class="form-label" for="nome">Seu nome</label>
+          <input type="text" id="nome" class="form-input" placeholder="Como você gosta de ser chamado(a)?" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="whatsapp">Seu WhatsApp</label>
+          <input type="tel" id="whatsapp" class="form-input" placeholder="(00) 00000-0000" required>
+          <p class="form-hint">Prometemos não enviar spam 🤞</p>
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="btn-ver-resultado">
+          Ver Meu Resultado
+        </button>
+      </form>
+
+      <p class="privacy-note">🔒 Seus dados estão seguros e não serão compartilhados.</p>
+    </div>
+  </div>
+
   <!-- TELA RESULTADO -->
   <div id="tela-resultado" class="container hidden">
     <div class="card card-result text-center">
       <div class="result-header">
-        <p class="result-label">Seu temperamento dominante é</p>
+        <p class="result-label"><span id="nome-usuario" class="welcome-name"></span>, seu temperamento dominante é</p>
         <div class="result-emoji" id="result-emoji"></div>
         <h1 class="result-name" id="result-name"></h1>
         <p class="result-secondary" id="result-secondary"></p>
@@ -662,6 +770,12 @@
   </div>
 
   <script>
+    // =====================================================
+    // CONFIGURAÇÃO - ALTERE APENAS ESTA URL
+    // =====================================================
+    const GOOGLE_SCRIPT_URL = https://script.google.com/macros/s/AKfycbwSDq9CVziZeZ3bPmN_05wAa-FsgOmsOHcKx9Gc1BLgnOPtCEOWJ6jlFqd282Wkc3D7/exec;
+    // =====================================================
+
     // DADOS DO TESTE
     const perguntasParte1 = [
       {
@@ -861,6 +975,8 @@
     let respostasParte1 = [];
     let respostasParte2 = [];
     let perguntaAtual = 0;
+    let dadosLead = {};
+    let resultadoCalculado = null;
 
     // FUNÇÕES
     function mostrarTela(telaId) {
@@ -895,7 +1011,6 @@
       document.getElementById('option-a').textContent = pergunta.opcaoA;
       document.getElementById('option-b').textContent = pergunta.opcaoB;
 
-      // Atualizar barra de progresso
       let progresso;
       if (fase === 'parte1') {
         progresso = ((perguntaAtual + 1) / perguntas.length) * 50;
@@ -920,51 +1035,44 @@
           perguntaAtual++;
           atualizarPergunta();
         } else {
-          mostrarResultado();
+          // Calcula o resultado antes de mostrar a tela de captura
+          resultadoCalculado = calcularResultado();
+          mostrarTela('tela-captura');
         }
       }
     }
 
     function calcularResultado() {
-      // Conta respostas A em cada parte
       const countA_P1 = respostasParte1.filter(r => r === 'A').length;
       const countA_P2 = respostasParte2.filter(r => r === 'A').length;
       
-      // Calcula porcentagens
-      // Parte 1: A = Quente, B = Frio
       const percentQuente = (countA_P1 / 10) * 100;
-      
-      // Parte 2: A = Úmido, B = Seco
       const percentSeco = ((10 - countA_P2) / 10) * 100;
 
-      // Determina dominante
       const ehQuente = percentQuente >= 50;
       const ehSeco = percentSeco >= 50;
 
       let dominante, secundario;
       
       if (ehQuente && !ehSeco) {
-        dominante = 'sanguineo'; // Quente + Úmido
+        dominante = 'sanguineo';
       } else if (ehQuente && ehSeco) {
-        dominante = 'colerico'; // Quente + Seco
+        dominante = 'colerico';
       } else if (!ehQuente && ehSeco) {
-        dominante = 'melancolico'; // Frio + Seco
+        dominante = 'melancolico';
       } else {
-        dominante = 'fleumatico'; // Frio + Úmido
+        dominante = 'fleumatico';
       }
 
-      // Determina secundário baseado no eixo mais próximo de 50%
       const distQuente = Math.abs(percentQuente - 50);
       const distSeco = Math.abs(percentSeco - 50);
 
       if (distQuente <= distSeco) {
-        // Eixo Quente/Frio é mais indefinido, secundário varia nesse eixo
         if (dominante === 'sanguineo') secundario = 'fleumatico';
         else if (dominante === 'colerico') secundario = 'melancolico';
         else if (dominante === 'melancolico') secundario = 'colerico';
         else secundario = 'sanguineo';
       } else {
-        // Eixo Úmido/Seco é mais indefinido
         if (dominante === 'sanguineo') secundario = 'colerico';
         else if (dominante === 'colerico') secundario = 'sanguineo';
         else if (dominante === 'melancolico') secundario = 'fleumatico';
@@ -979,10 +1087,87 @@
       };
     }
 
+    function formatarWhatsApp(valor) {
+      // Remove tudo que não é número
+      let numeros = valor.replace(/\D/g, '');
+      
+      // Formata conforme digita
+      if (numeros.length <= 2) {
+        return `(${numeros}`;
+      } else if (numeros.length <= 7) {
+        return `(${numeros.slice(0,2)}) ${numeros.slice(2)}`;
+      } else {
+        return `(${numeros.slice(0,2)}) ${numeros.slice(2,7)}-${numeros.slice(7,11)}`;
+      }
+    }
+
+    // Máscara do WhatsApp
+    document.getElementById('whatsapp').addEventListener('input', function(e) {
+      e.target.value = formatarWhatsApp(e.target.value);
+    });
+
+    async function enviarLead(event) {
+      event.preventDefault();
+      
+      const btnSubmit = document.getElementById('btn-ver-resultado');
+      const nome = document.getElementById('nome').value.trim();
+      const whatsapp = document.getElementById('whatsapp').value.trim();
+      
+      // Salva os dados do lead
+      dadosLead = { nome, whatsapp };
+      
+      // Mostra loading
+      btnSubmit.disabled = true;
+      btnSubmit.innerHTML = '<span class="loading-spinner"></span>Carregando...';
+
+      // Prepara dados para enviar
+      const resultado = temperamentos[resultadoCalculado.dominante];
+      const resultadoSec = temperamentos[resultadoCalculado.secundario];
+      const nomeCompleto = `${resultado.nome}-${resultadoSec.nome}`;
+
+      const dadosParaEnviar = {
+        nome: nome,
+        whatsapp: whatsapp,
+        temperamento: nomeCompleto,
+        dominante: resultado.nome,
+        secundario: resultadoSec.nome,
+        percentQuente: Math.round(resultadoCalculado.percentQuente) + '%',
+        percentSeco: Math.round(resultadoCalculado.percentSeco) + '%',
+        dataHora: new Date().toLocaleString('pt-BR')
+      };
+
+      try {
+        // Envia para o Google Sheets
+        if (GOOGLE_SCRIPT_URL !== 'COLE_SUA_URL_AQUI') {
+          await fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(dadosParaEnviar)
+          });
+        }
+      } catch (error) {
+        console.log('Erro ao enviar lead:', error);
+        // Continua mesmo se der erro - não trava o usuário
+      }
+
+      // Mostra o resultado
+      mostrarResultado();
+      
+      // Restaura o botão
+      btnSubmit.disabled = false;
+      btnSubmit.innerHTML = 'Ver Meu Resultado';
+    }
+
     function mostrarResultado() {
-      const { dominante, secundario, percentQuente, percentSeco } = calcularResultado();
+      const { dominante, secundario, percentQuente, percentSeco } = resultadoCalculado;
       const resultado = temperamentos[dominante];
       const resultadoSec = temperamentos[secundario];
+
+      // Mostra o nome do usuário
+      document.getElementById('nome-usuario').textContent = dadosLead.nome;
 
       document.getElementById('result-emoji').textContent = resultado.emoji;
       document.getElementById('result-name').textContent = resultado.nome;
@@ -1024,9 +1209,9 @@
       document.getElementById('result-amor').textContent = resultado.noAmor;
       document.getElementById('result-frase').textContent = resultado.frase;
 
-      // Link do WhatsApp
+      // Link do WhatsApp - agora inclui o nome do lead
       const nomeCompleto = `${resultado.nome}-${resultadoSec.nome}`;
-      const mensagem = encodeURIComponent(`Olá Jaya! Fiz o teste de temperamentos e meu resultado foi ${nomeCompleto}. Quero entender mais sobre como isso afeta meus relacionamentos.`);
+      const mensagem = encodeURIComponent(`Olá Jaya! Sou ${dadosLead.nome}, fiz o teste de temperamentos e meu resultado foi ${nomeCompleto}. Quero entender mais sobre como isso afeta meus relacionamentos.`);
       document.getElementById('whatsapp-link').href = `https://wa.me/5561992634557?text=${mensagem}`;
 
       mostrarTela('tela-resultado');
@@ -1037,6 +1222,10 @@
       respostasParte1 = [];
       respostasParte2 = [];
       perguntaAtual = 0;
+      dadosLead = {};
+      resultadoCalculado = null;
+      document.getElementById('nome').value = '';
+      document.getElementById('whatsapp').value = '';
       mostrarTela('tela-intro');
     }
   </script>
