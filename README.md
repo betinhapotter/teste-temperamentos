@@ -8,7 +8,7 @@
 
 **Descubra seu temperamento dominante e secundário com base na teoria clássica dos 4 temperamentos de Hipócrates.**
 
-[🚀 Acessar o Teste](https://shaktijaya.github.io/teste-temperamentos/) · [📱 Contato](https://wa.me/5561992634557)
+[🚀 Acessar o Teste](https://betinhapotter.github.io/teste-temperamentos/) · [📱 Contato](https://wa.me/5561992634557)
 
 </div>
 
@@ -54,19 +54,19 @@ Há mais de 2.400 anos, Hipócrates identificou **4 temperamentos fundamentais**
 ## 🚀 Como Usar
 
 ### Opção 1: Acessar Online
-Acesse diretamente: **[shaktijaya.github.io/teste-temperamentos](https://shaktijaya.github.io/teste-temperamentos/)**
+Acesse diretamente: **[betinhapotter.github.io/teste-temperamentos](https://betinhapotter.github.io/teste-temperamentos/)**
 
 ### Opção 2: Hospedar Localmente
 1. Clone o repositório:
 ```bash
-git clone https://github.com/shaktijaya/teste-temperamentos.git
+git clone https://github.com/betinhapotter/teste-temperamentos.git
 ```
 2. Abra o arquivo `index.html` no navegador
 
 ### Opção 3: Incorporar em Outro Site
 ```html
 <iframe 
-  src="https://shaktijaya.github.io/teste-temperamentos/" 
+  src="https://betinhapotter.github.io/teste-temperamentos/" 
   width="100%" 
   height="800" 
   frameborder="0"
