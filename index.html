@@ -6,628 +6,112 @@
   <title>Teste de Temperamentos | Shakti Jaya</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      min-height: 100vh;
-      background: linear-gradient(135deg, #581c87 0%, #312e81 50%, #0f172a 100%);
-      color: white;
-      line-height: 1.6;
-    }
-
-    .container {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-
-    .card {
-      max-width: 600px;
-      width: 100%;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(20px);
-      border-radius: 24px;
-      padding: 40px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-    }
-
-    .card-result {
-      max-width: 700px;
-    }
-
-    .text-center {
-      text-align: center;
-    }
-
-    .emojis {
-      font-size: 48px;
-      margin-bottom: 20px;
-    }
-
-    h1 {
-      font-size: 28px;
-      font-weight: 700;
-      margin-bottom: 12px;
-    }
-
-    h2 {
-      font-size: 24px;
-      font-weight: 700;
-      margin-bottom: 12px;
-    }
-
-    h3 {
-      font-size: 18px;
-      font-weight: 600;
-      margin-bottom: 12px;
-    }
-
-    .subtitle {
-      color: #c4b5fd;
-      font-size: 16px;
-      margin-bottom: 24px;
-    }
-
-    .info-box {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 24px;
-      text-align: left;
-    }
-
-    .info-box p {
-      color: #e9d5ff;
-      margin-bottom: 12px;
-      font-weight: 600;
-    }
-
-    .info-box ul {
-      list-style: none;
-      color: #c4b5fd;
-    }
-
-    .info-box li {
-      margin-bottom: 8px;
-    }
-
-    .info-box li::before {
-      content: "✦ ";
-    }
-
-    .small-text {
-      font-size: 14px;
-      color: #a78bfa;
-      margin-bottom: 24px;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 16px 40px;
-      border-radius: 50px;
-      font-size: 16px;
-      font-weight: 700;
-      text-decoration: none;
-      border: none;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      transform: scale(1);
-    }
-
-    .btn:hover {
-      transform: scale(1.05);
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
-      color: white;
-      box-shadow: 0 10px 30px -10px rgba(168, 85, 247, 0.5);
-    }
-
-    .btn-primary:hover {
-      background: linear-gradient(135deg, #9333ea 0%, #db2777 100%);
-    }
-
-    .btn-whatsapp {
-      background: linear-gradient(135deg, #22c55e 0%, #059669 100%);
-      color: white;
-      box-shadow: 0 10px 30px -10px rgba(34, 197, 94, 0.5);
-    }
-
-    .btn-whatsapp:hover {
-      background: linear-gradient(135deg, #16a34a 0%, #047857 100%);
-    }
-
-    .btn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: scale(1);
-    }
-
-    /* Progress Bar */
-    .progress-container {
-      margin-bottom: 20px;
-    }
-
-    .progress-info {
-      display: flex;
-      justify-content: space-between;
-      font-size: 12px;
-      color: #a78bfa;
-      margin-bottom: 8px;
-    }
-
-    .progress-bar {
-      width: 100%;
-      height: 6px;
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 10px;
-      overflow: hidden;
-    }
-
-    .progress-fill {
-      height: 100%;
-      background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
-      border-radius: 10px;
-      transition: width 0.5s ease;
-    }
-
-    /* Question */
-    .question-text {
-      font-size: 20px;
-      font-weight: 500;
-      margin-bottom: 28px;
-      line-height: 1.5;
-    }
-
-    .options {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .option-btn {
-      width: 100%;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 16px;
-      padding: 18px 20px;
-      text-align: left;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      color: white;
-    }
-
-    .option-btn:hover {
-      background: rgba(255, 255, 255, 0.15);
-      border-color: #a855f7;
-    }
-
-    .option-label {
-      background: rgba(168, 85, 247, 0.3);
-      color: #c4b5fd;
-      font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 8px;
-      font-size: 12px;
-      flex-shrink: 0;
-      transition: all 0.3s ease;
-    }
-
-    .option-btn:hover .option-label {
-      background: #a855f7;
-      color: white;
-    }
-
-    .option-text {
-      color: #e9d5ff;
-      font-size: 15px;
-      transition: all 0.3s ease;
-    }
-
-    .option-btn:hover .option-text {
-      color: white;
-    }
-
-    /* Form Styles */
-    .form-group {
-      margin-bottom: 20px;
-      text-align: left;
-    }
-
-    .form-label {
-      display: block;
-      font-size: 14px;
-      font-weight: 600;
-      color: #e9d5ff;
-      margin-bottom: 8px;
-    }
-
-    .form-input {
-      width: 100%;
-      padding: 16px 20px;
-      border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      font-size: 16px;
-      font-family: 'Inter', sans-serif;
-      transition: all 0.3s ease;
-    }
-
-    .form-input::placeholder {
-      color: #a78bfa;
-    }
-
-    .form-input:focus {
-      outline: none;
-      border-color: #a855f7;
-      background: rgba(255, 255, 255, 0.15);
-    }
-
-    .form-hint {
-      font-size: 12px;
-      color: #a78bfa;
-      margin-top: 6px;
-    }
-
-    .privacy-note {
-      font-size: 12px;
-      color: #a78bfa;
-      margin-top: 20px;
-      text-align: center;
-    }
-
-    .privacy-note a {
-      color: #c4b5fd;
-      text-decoration: underline;
-    }
-
-    /* Result Styles */
-    .result-header {
-      margin-bottom: 24px;
-    }
-
-    .result-label {
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: #a78bfa;
-      margin-bottom: 12px;
-    }
-
-    .result-emoji {
-      font-size: 64px;
-      margin-bottom: 12px;
-    }
-
-    .result-name {
-      font-size: 32px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .result-secondary {
-      font-size: 18px;
-      color: #c4b5fd;
-      margin-bottom: 16px;
-    }
-
-    .result-element {
-      font-size: 16px;
-      color: #c4b5fd;
-      margin-bottom: 8px;
-    }
-
-    .result-structure {
-      display: inline-block;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 6px 16px;
-      border-radius: 20px;
-      font-size: 14px;
-      color: #a78bfa;
-    }
-
-    /* Eixos */
-    .eixos-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-bottom: 20px;
-    }
-
-    @media (max-width: 500px) {
-      .eixos-container {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .eixo-box {
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 16px;
-      padding: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-    }
-
-    .eixo-title {
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: #a78bfa;
-      margin-bottom: 10px;
-    }
-
-    .eixo-bar-container {
-      position: relative;
-      height: 32px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 16px;
-      overflow: hidden;
-      margin-bottom: 8px;
-    }
-
-    .eixo-bar-fill {
-      height: 100%;
-      border-radius: 16px;
-      transition: width 0.8s ease;
-    }
-
-    .eixo-bar-fill.quente {
-      background: linear-gradient(90deg, #f97316 0%, #ef4444 100%);
-    }
-
-    .eixo-bar-fill.frio {
-      background: linear-gradient(90deg, #06b6d4 0%, #3b82f6 100%);
-    }
-
-    .eixo-bar-fill.umido {
-      background: linear-gradient(90deg, #22c55e 0%, #14b8a6 100%);
-    }
-
-    .eixo-bar-fill.seco {
-      background: linear-gradient(90deg, #eab308 0%, #f59e0b 100%);
-    }
-
-    .eixo-labels {
-      display: flex;
-      justify-content: space-between;
-      font-size: 11px;
-    }
-
-    .eixo-label-left {
-      color: #a78bfa;
-    }
-
-    .eixo-label-right {
-      color: #a78bfa;
-    }
-
-    .eixo-percent {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-weight: 700;
-      font-size: 14px;
-      color: white;
-      text-shadow: 0 1px 3px rgba(0,0,0,0.5);
-    }
-
-    .result-description {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 20px;
-      padding: 24px;
-      margin-bottom: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .result-description p {
-      font-size: 16px;
-      color: #e9d5ff;
-      font-style: italic;
-      text-align: center;
-    }
-
-    .result-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-bottom: 20px;
-    }
-
-    @media (max-width: 600px) {
-      .result-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .result-box {
-      border-radius: 20px;
-      padding: 20px;
-    }
-
-    .result-box ul {
-      list-style: none;
-    }
-
-    .result-box li {
-      font-size: 13px;
-      margin-bottom: 6px;
-    }
-
-    .result-box-green {
-      background: rgba(16, 185, 129, 0.1);
-      border: 1px solid rgba(16, 185, 129, 0.3);
-    }
-
-    .result-box-green h3 {
-      color: #34d399;
-    }
-
-    .result-box-green li {
-      color: #a7f3d0;
-    }
-
-    .result-box-green li::before {
-      content: "• ";
-      color: #34d399;
-    }
-
-    .result-box-amber {
-      background: rgba(245, 158, 11, 0.1);
-      border: 1px solid rgba(245, 158, 11, 0.3);
-    }
-
-    .result-box-amber h3 {
-      color: #fbbf24;
-    }
-
-    .result-box-amber li {
-      color: #fde68a;
-    }
-
-    .result-box-amber li::before {
-      content: "• ";
-      color: #fbbf24;
-    }
-
-    .result-box-pink {
-      background: rgba(236, 72, 153, 0.1);
-      border: 1px solid rgba(236, 72, 153, 0.3);
-      border-radius: 20px;
-      padding: 20px;
-      margin-bottom: 20px;
-    }
-
-    .result-box-pink h3 {
-      color: #f472b6;
-    }
-
-    .result-box-pink p {
-      color: #fbcfe8;
-      font-size: 14px;
-    }
-
-    .result-quote {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 20px;
-      padding: 28px;
-      margin-bottom: 24px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .result-quote p {
-      font-size: 20px;
-      font-weight: 300;
-      font-style: italic;
-    }
-
-    .result-cta {
-      background: linear-gradient(135deg, rgba(147, 51, 234, 0.3) 0%, rgba(219, 39, 119, 0.3) 100%);
-      border-radius: 20px;
-      padding: 28px;
-      border: 1px solid rgba(147, 51, 234, 0.3);
-      margin-bottom: 20px;
-    }
-
-    .result-cta h3 {
-      font-size: 18px;
-      margin-bottom: 8px;
-    }
-
-    .result-cta p {
-      color: #c4b5fd;
-      font-size: 14px;
-      margin-bottom: 20px;
-    }
-
-    .restart-btn {
-      background: none;
-      border: none;
-      color: #a78bfa;
-      text-decoration: underline;
-      cursor: pointer;
-      font-size: 14px;
-      transition: color 0.3s ease;
-    }
-
-    .restart-btn:hover {
-      color: white;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    .combinacao-tag {
-      display: inline-block;
-      background: linear-gradient(135deg, rgba(168, 85, 247, 0.3) 0%, rgba(236, 72, 153, 0.3) 100%);
-      padding: 8px 20px;
-      border-radius: 20px;
-      font-size: 14px;
-      color: #e9d5ff;
-      border: 1px solid rgba(168, 85, 247, 0.4);
-      margin-top: 12px;
-    }
-
-    .loading-spinner {
-      display: inline-block;
-      width: 20px;
-      height: 20px;
-      border: 3px solid rgba(255,255,255,0.3);
-      border-radius: 50%;
-      border-top-color: white;
-      animation: spin 1s ease-in-out infinite;
-      margin-right: 10px;
-      vertical-align: middle;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    .welcome-name {
-      color: #f472b6;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; min-height: 100vh; background: linear-gradient(135deg, #581c87 0%, #312e81 50%, #0f172a 100%); color: white; line-height: 1.6; }
+    .container { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+    .card { max-width: 600px; width: 100%; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); border-radius: 24px; padding: 40px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
+    .card-result { max-width: 700px; }
+    .text-center { text-align: center; }
+    .emojis { font-size: 48px; margin-bottom: 20px; }
+    h1 { font-size: 28px; font-weight: 700; margin-bottom: 12px; }
+    h2 { font-size: 24px; font-weight: 700; margin-bottom: 12px; }
+    h3 { font-size: 18px; font-weight: 600; margin-bottom: 12px; }
+    .subtitle { color: #c4b5fd; font-size: 16px; margin-bottom: 24px; }
+    .info-box { background: rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 20px; margin-bottom: 24px; text-align: left; }
+    .info-box p { color: #e9d5ff; margin-bottom: 12px; font-weight: 600; }
+    .info-box ul { list-style: none; color: #c4b5fd; }
+    .info-box li { margin-bottom: 8px; }
+    .small-text { font-size: 14px; color: #a78bfa; margin-bottom: 24px; }
+    .btn { display: inline-block; padding: 16px 40px; border-radius: 50px; font-size: 16px; font-weight: 700; text-decoration: none; border: none; cursor: pointer; transition: all 0.3s ease; }
+    .btn:hover { transform: scale(1.05); }
+    .btn-primary { background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%); color: white; box-shadow: 0 10px 30px -10px rgba(168, 85, 247, 0.5); }
+    .btn-whatsapp { background: linear-gradient(135deg, #22c55e 0%, #059669 100%); color: white; box-shadow: 0 10px 30px -10px rgba(34, 197, 94, 0.5); }
+    .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    .progress-container { margin-bottom: 20px; }
+    .progress-info { display: flex; justify-content: space-between; font-size: 12px; color: #a78bfa; margin-bottom: 8px; }
+    .progress-bar { width: 100%; height: 6px; background: rgba(255, 255, 255, 0.2); border-radius: 10px; overflow: hidden; }
+    .progress-fill { height: 100%; background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%); border-radius: 10px; transition: width 0.5s ease; }
+    .question-text { font-size: 20px; font-weight: 500; margin-bottom: 28px; line-height: 1.5; }
+    .options { display: flex; flex-direction: column; gap: 12px; }
+    .option-btn { width: 100%; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 16px; padding: 18px 20px; text-align: left; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: flex-start; gap: 12px; color: white; }
+    .option-btn:hover { background: rgba(255, 255, 255, 0.15); border-color: #a855f7; }
+    .option-label { background: rgba(168, 85, 247, 0.3); color: #c4b5fd; font-weight: 700; padding: 4px 10px; border-radius: 8px; font-size: 12px; flex-shrink: 0; }
+    .option-text { color: #e9d5ff; font-size: 15px; }
+    .form-group { margin-bottom: 20px; text-align: left; }
+    .form-label { display: block; font-size: 14px; font-weight: 600; color: #e9d5ff; margin-bottom: 8px; }
+    .form-input { width: 100%; padding: 16px 20px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.1); color: white; font-size: 16px; font-family: 'Inter', sans-serif; }
+    .form-input::placeholder { color: #a78bfa; }
+    .form-input:focus { outline: none; border-color: #a855f7; background: rgba(255, 255, 255, 0.15); }
+    .form-hint { font-size: 12px; color: #a78bfa; margin-top: 6px; }
+    .privacy-note { font-size: 12px; color: #a78bfa; margin-top: 20px; text-align: center; }
+    .result-header { margin-bottom: 24px; }
+    .result-label { font-size: 12px; text-transform: uppercase; letter-spacing: 2px; color: #a78bfa; margin-bottom: 12px; }
+    .result-emoji { font-size: 64px; margin-bottom: 12px; }
+    .result-name { font-size: 32px; font-weight: 700; margin-bottom: 8px; }
+    .result-secondary { font-size: 18px; color: #c4b5fd; margin-bottom: 16px; }
+    .eixos-container { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+    @media (max-width: 500px) { .eixos-container { grid-template-columns: 1fr; } }
+    .eixo-box { background: rgba(255, 255, 255, 0.08); border-radius: 16px; padding: 16px; border: 1px solid rgba(255, 255, 255, 0.15); }
+    .eixo-title { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #a78bfa; margin-bottom: 10px; }
+    .eixo-bar-container { position: relative; height: 32px; background: rgba(255, 255, 255, 0.1); border-radius: 16px; overflow: hidden; margin-bottom: 8px; }
+    .eixo-bar-fill { height: 100%; border-radius: 16px; transition: width 0.8s ease; }
+    .eixo-bar-fill.quente { background: linear-gradient(90deg, #f97316 0%, #ef4444 100%); }
+    .eixo-bar-fill.frio { background: linear-gradient(90deg, #06b6d4 0%, #3b82f6 100%); }
+    .eixo-bar-fill.umido { background: linear-gradient(90deg, #22c55e 0%, #14b8a6 100%); }
+    .eixo-bar-fill.seco { background: linear-gradient(90deg, #eab308 0%, #f59e0b 100%); }
+    .eixo-labels { display: flex; justify-content: space-between; font-size: 11px; color: #a78bfa; }
+    .eixo-percent { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-weight: 700; font-size: 14px; color: white; text-shadow: 0 1px 3px rgba(0,0,0,0.5); }
+    .result-description { background: rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 24px; margin-bottom: 20px; border: 1px solid rgba(255, 255, 255, 0.2); }
+    .result-description p { font-size: 16px; color: #e9d5ff; font-style: italic; text-align: center; }
+    .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+    @media (max-width: 600px) { .result-grid { grid-template-columns: 1fr; } }
+    .result-box { border-radius: 20px; padding: 20px; }
+    .result-box ul { list-style: none; }
+    .result-box li { font-size: 13px; margin-bottom: 6px; }
+    .result-box-green { background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); }
+    .result-box-green h3 { color: #34d399; }
+    .result-box-green li { color: #a7f3d0; }
+    .result-box-amber { background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); }
+    .result-box-amber h3 { color: #fbbf24; }
+    .result-box-amber li { color: #fde68a; }
+    .result-box-pink { background: rgba(236, 72, 153, 0.1); border: 1px solid rgba(236, 72, 153, 0.3); border-radius: 20px; padding: 20px; margin-bottom: 20px; }
+    .result-box-pink h3 { color: #f472b6; }
+    .result-box-pink p { color: #fbcfe8; font-size: 14px; }
+    .result-quote { background: rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 28px; margin-bottom: 24px; border: 1px solid rgba(255, 255, 255, 0.2); }
+    .result-quote p { font-size: 20px; font-weight: 300; font-style: italic; }
+    .result-cta { background: linear-gradient(135deg, rgba(147, 51, 234, 0.3) 0%, rgba(219, 39, 119, 0.3) 100%); border-radius: 20px; padding: 28px; border: 1px solid rgba(147, 51, 234, 0.3); margin-bottom: 20px; }
+    .result-cta h3 { font-size: 18px; margin-bottom: 8px; }
+    .result-cta p { color: #c4b5fd; font-size: 14px; margin-bottom: 20px; }
+    .restart-btn { background: none; border: none; color: #a78bfa; text-decoration: underline; cursor: pointer; font-size: 14px; }
+    .restart-btn:hover { color: white; }
+    .hidden { display: none !important; }
+    .combinacao-tag { display: inline-block; background: linear-gradient(135deg, rgba(168, 85, 247, 0.3) 0%, rgba(236, 72, 153, 0.3) 100%); padding: 8px 20px; border-radius: 20px; font-size: 14px; color: #e9d5ff; border: 1px solid rgba(168, 85, 247, 0.4); margin-top: 12px; }
+    .loading-spinner { display: inline-block; width: 20px; height: 20px; border: 3px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: white; animation: spin 1s ease-in-out infinite; margin-right: 10px; vertical-align: middle; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .welcome-name { color: #f472b6; }
   </style>
 </head>
 <body>
 
-  <!-- TELA INTRO -->
   <div id="tela-intro" class="container">
     <div class="card text-center">
       <div class="emojis">🔥🌬️🌊🌍</div>
       <h1>Descubra Seu Temperamento</h1>
-      <p class="subtitle">Há mais de 2.400 anos, Hipócrates identificou 4 temperamentos fundamentais que definem como reagimos instintivamente ao mundo.</p>
-      
+      <p class="subtitle">Ha mais de 2.400 anos, Hipocrates identificou 4 temperamentos fundamentais que definem como reagimos instintivamente ao mundo.</p>
       <div class="info-box">
         <p>Este teste revela:</p>
         <ul>
-          <li>Seu temperamento dominante e secundário</li>
-          <li>Suas tendências nos eixos Quente/Frio e Úmido/Seco</li>
-          <li>Seus pontos fortes e de atenção</li>
+          <li>Seu temperamento dominante e secundario</li>
+          <li>Suas tendencias nos eixos Quente/Frio e Umido/Seco</li>
+          <li>Seus pontos fortes e de atencao</li>
           <li>Como seu temperamento afeta seus relacionamentos</li>
         </ul>
       </div>
-
-      <p class="small-text">⏱️ Tempo estimado: 5 minutos<br>Responda com seu primeiro instinto, não com o que você gostaria de ser.</p>
-
-      <button class="btn btn-primary" onclick="iniciarTeste()">Começar o Teste</button>
+      <p class="small-text">Tempo estimado: 5 minutos<br>Responda com seu primeiro instinto.</p>
+      <button class="btn btn-primary" id="btn-iniciar">Comecar o Teste</button>
     </div>
   </div>
 
-  <!-- TELA PERGUNTAS -->
   <div id="tela-perguntas" class="container hidden">
     <div class="card">
       <div class="progress-container">
@@ -639,15 +123,13 @@
           <div class="progress-fill" id="progress-fill" style="width: 5%"></div>
         </div>
       </div>
-
       <p class="question-text text-center" id="question-text"></p>
-
       <div class="options">
-        <button class="option-btn" onclick="responder('A')">
+        <button class="option-btn" id="btn-opcao-a">
           <span class="option-label">A</span>
           <span class="option-text" id="option-a"></span>
         </button>
-        <button class="option-btn" onclick="responder('B')">
+        <button class="option-btn" id="btn-opcao-b">
           <span class="option-label">B</span>
           <span class="option-text" id="option-b"></span>
         </button>
@@ -655,61 +137,48 @@
     </div>
   </div>
 
-  <!-- TELA TRANSIÇÃO -->
   <div id="tela-transicao" class="container hidden">
     <div class="card text-center">
       <div class="emojis">✨</div>
-      <h2>Primeira Parte Concluída!</h2>
-      <p class="subtitle">Agora vamos explorar como você processa as experiências e se adapta às situações da vida.</p>
-      
+      <h2>Primeira Parte Concluida!</h2>
+      <p class="subtitle">Agora vamos explorar como voce processa as experiencias e se adapta as situacoes da vida.</p>
       <div class="progress-bar" style="margin-bottom: 28px;">
         <div class="progress-fill" style="width: 50%"></div>
       </div>
-
-      <button class="btn btn-primary" onclick="iniciarParte2()">Continuar</button>
+      <button class="btn btn-primary" id="btn-continuar">Continuar</button>
     </div>
   </div>
 
-  <!-- TELA CAPTURA DE LEAD -->
   <div id="tela-captura" class="container hidden">
     <div class="card text-center">
       <div class="emojis">🎉</div>
-      <h2>Seu resultado está pronto!</h2>
-      <p class="subtitle">Digite seus dados para ver seu perfil completo de temperamento:</p>
-      
-      <form id="lead-form" onsubmit="enviarLead(event)">
+      <h2>Seu resultado esta pronto!</h2>
+      <p class="subtitle">Digite seus dados para ver seu perfil completo:</p>
+      <form id="lead-form">
         <div class="form-group">
           <label class="form-label" for="nome">Seu nome</label>
-          <input type="text" id="nome" class="form-input" placeholder="Como você gosta de ser chamado(a)?" required>
+          <input type="text" id="nome" class="form-input" placeholder="Como voce gosta de ser chamado(a)?" required>
         </div>
-
         <div class="form-group">
           <label class="form-label" for="whatsapp">Seu WhatsApp</label>
           <input type="tel" id="whatsapp" class="form-input" placeholder="(00) 00000-0000" required>
-          <p class="form-hint">Prometemos não enviar spam 🤞</p>
+          <p class="form-hint">Prometemos nao enviar spam</p>
         </div>
-
-        <button type="submit" class="btn btn-primary" id="btn-ver-resultado">
-          Ver Meu Resultado
-        </button>
+        <button type="submit" class="btn btn-primary" id="btn-ver-resultado">Ver Meu Resultado</button>
       </form>
-
-      <p class="privacy-note">🔒 Seus dados estão seguros e não serão compartilhados.</p>
+      <p class="privacy-note">Seus dados estao seguros e nao serao compartilhados.</p>
     </div>
   </div>
 
-  <!-- TELA RESULTADO -->
   <div id="tela-resultado" class="container hidden">
     <div class="card card-result text-center">
       <div class="result-header">
-        <p class="result-label"><span id="nome-usuario" class="welcome-name"></span>, seu temperamento dominante é</p>
+        <p class="result-label"><span id="nome-usuario" class="welcome-name"></span>, seu temperamento dominante e</p>
         <div class="result-emoji" id="result-emoji"></div>
         <h1 class="result-name" id="result-name"></h1>
         <p class="result-secondary" id="result-secondary"></p>
         <div class="combinacao-tag" id="combinacao-tag"></div>
       </div>
-
-      <!-- Eixos com porcentagens -->
       <div class="eixos-container">
         <div class="eixo-box">
           <p class="eixo-title">Eixo de Energia</p>
@@ -718,517 +187,251 @@
             <span class="eixo-percent" id="eixo1-percent"></span>
           </div>
           <div class="eixo-labels">
-            <span class="eixo-label-left">Frio 🧊</span>
-            <span class="eixo-label-right">🔥 Quente</span>
+            <span>Frio</span>
+            <span>Quente</span>
           </div>
         </div>
         <div class="eixo-box">
-          <p class="eixo-title">Eixo de Adaptação</p>
+          <p class="eixo-title">Eixo de Adaptacao</p>
           <div class="eixo-bar-container">
             <div class="eixo-bar-fill" id="eixo2-fill"></div>
             <span class="eixo-percent" id="eixo2-percent"></span>
           </div>
           <div class="eixo-labels">
-            <span class="eixo-label-left">Úmido 💧</span>
-            <span class="eixo-label-right">🏜️ Seco</span>
+            <span>Umido</span>
+            <span>Seco</span>
           </div>
         </div>
       </div>
-
       <div class="result-description">
         <p id="result-description"></p>
       </div>
-
       <div class="result-grid">
         <div class="result-box result-box-green">
-          <h3>✦ Pontos Fortes</h3>
+          <h3>Pontos Fortes</h3>
           <ul id="result-fortes"></ul>
         </div>
         <div class="result-box result-box-amber">
-          <h3>⚡ Pontos de Atenção</h3>
+          <h3>Pontos de Atencao</h3>
           <ul id="result-atencao"></ul>
         </div>
       </div>
-
       <div class="result-box-pink">
-        <h3>💕 Seu Temperamento no Amor</h3>
+        <h3>Seu Temperamento no Amor</h3>
         <p id="result-amor"></p>
       </div>
-
       <div class="result-quote">
         <p id="result-frase"></p>
       </div>
-
       <div class="result-cta">
         <h3>Quer entender como seu temperamento afeta seus relacionamentos?</h3>
-        <p>Agende uma sessão de Terapia Integrativa e descubra como transformar seus padrões em potência.</p>
-        <a id="whatsapp-link" href="#" target="_blank" class="btn btn-whatsapp">💬 Falar com Jaya no WhatsApp</a>
+        <p>Agende uma sessao de Terapia Integrativa e descubra como transformar seus padroes em potencia.</p>
+        <a id="whatsapp-link" href="#" target="_blank" class="btn btn-whatsapp">Falar com Jaya no WhatsApp</a>
       </div>
-
-      <button class="restart-btn" onclick="reiniciar()">Refazer o teste</button>
+      <button class="restart-btn" id="btn-reiniciar">Refazer o teste</button>
     </div>
   </div>
 
-  <script>
-    // =====================================================
-    // CONFIGURAÇÃO - ALTERE APENAS ESTA URL
-    // =====================================================
-    const GOOGLE_SCRIPT_URL = https://script.google.com/macros/s/AKfycbwSDq9CVziZeZ3bPmN_05wAa-FsgOmsOHcKx9Gc1BLgnOPtCEOWJ6jlFqd282Wkc3D7/exec;
-    // =====================================================
+<script>
+var GOOGLE_SCRIPT_URL = 'COLE_SUA_URL_AQUI';
 
-    // DADOS DO TESTE
-    const perguntasParte1 = [
-      {
-        situacao: "Você entra numa sala cheia de pessoas que não conhece...",
-        opcaoA: "Já vou olhando quem parece interessante, procuro um grupo pra me enturmar",
-        opcaoB: "Observo o ambiente primeiro, preciso entender o clima antes de me posicionar"
-      },
-      {
-        situacao: "Alguém te critica de forma inesperada...",
-        opcaoA: "Minha resposta vem na hora, às vezes antes de pensar",
-        opcaoB: "Preciso processar o que aconteceu antes de reagir"
-      },
-      {
-        situacao: "Numa reunião, surge um assunto polêmico...",
-        opcaoA: "Minha opinião já está na ponta da língua, difícil segurar",
-        opcaoB: "Prefiro ouvir os outros antes de me expor"
-      },
-      {
-        situacao: "Você tem uma ideia nova empolgante...",
-        opcaoA: "Preciso contar pra alguém imediatamente, não aguento guardar",
-        opcaoB: "Deixo a ideia amadurecer internamente antes de compartilhar"
-      },
-      {
-        situacao: "Num grupo precisando tomar uma decisão urgente...",
-        opcaoA: "Tomo a frente naturalmente, alguém precisa decidir",
-        opcaoB: "Espero ver o que os outros pensam primeiro"
-      },
-      {
-        situacao: "Sua rotina é previsível há meses...",
-        opcaoA: "Isso me sufoca, preciso de novidade e movimento",
-        opcaoB: "Isso me traz segurança e estabilidade"
-      },
-      {
-        situacao: "Quando você fala, as pessoas costumam dizer que...",
-        opcaoA: "Falo alto, com energia, às vezes interrompo sem perceber",
-        opcaoB: "Falo de forma mais ponderada, meço as palavras"
-      },
-      {
-        situacao: "Depois de um dia intenso de trabalho...",
-        opcaoA: "Ainda tenho energia pra sair, encontrar pessoas, fazer algo",
-        opcaoB: "Preciso de silêncio e tempo sozinho pra recarregar"
-      },
-      {
-        situacao: "Quando algo te incomoda numa relação...",
-        opcaoA: "Falo na hora, não consigo engolir e fingir que tá tudo bem",
-        opcaoB: "Processo internamente antes de decidir se vale falar"
-      },
-      {
-        situacao: "Se sua vida fosse um filme, seria mais...",
-        opcaoA: "Ação e aventura, com reviravoltas constantes",
-        opcaoB: "Drama intimista, com profundidade e reflexão"
-      }
-    ];
+var perguntasParte1 = [
+  { situacao: "Voce entra numa sala cheia de pessoas que nao conhece...", opcaoA: "Ja vou olhando quem parece interessante, procuro um grupo pra me enturmar", opcaoB: "Observo o ambiente primeiro, preciso entender o clima antes de me posicionar" },
+  { situacao: "Alguem te critica de forma inesperada...", opcaoA: "Minha resposta vem na hora, as vezes antes de pensar", opcaoB: "Preciso processar o que aconteceu antes de reagir" },
+  { situacao: "Numa reuniao, surge um assunto polemico...", opcaoA: "Minha opiniao ja esta na ponta da lingua, dificil segurar", opcaoB: "Prefiro ouvir os outros antes de me expor" },
+  { situacao: "Voce tem uma ideia nova empolgante...", opcaoA: "Preciso contar pra alguem imediatamente, nao aguento guardar", opcaoB: "Deixo a ideia amadurecer internamente antes de compartilhar" },
+  { situacao: "Num grupo precisando tomar uma decisao urgente...", opcaoA: "Tomo a frente naturalmente, alguem precisa decidir", opcaoB: "Espero ver o que os outros pensam primeiro" },
+  { situacao: "Sua rotina e previsivel ha meses...", opcaoA: "Isso me sufoca, preciso de novidade e movimento", opcaoB: "Isso me traz seguranca e estabilidade" },
+  { situacao: "Quando voce fala, as pessoas costumam dizer que...", opcaoA: "Falo alto, com energia, as vezes interrompo sem perceber", opcaoB: "Falo de forma mais ponderada, meco as palavras" },
+  { situacao: "Depois de um dia intenso de trabalho...", opcaoA: "Ainda tenho energia pra sair, encontrar pessoas, fazer algo", opcaoB: "Preciso de silencio e tempo sozinho pra recarregar" },
+  { situacao: "Quando algo te incomoda numa relacao...", opcaoA: "Falo na hora, nao consigo engolir e fingir que ta tudo bem", opcaoB: "Processo internamente antes de decidir se vale falar" },
+  { situacao: "Se sua vida fosse um filme, seria mais...", opcaoA: "Acao e aventura, com reviravoltas constantes", opcaoB: "Drama intimista, com profundidade e reflexao" }
+];
 
-    const perguntasParte2 = [
-      {
-        situacao: "Uma pessoa querida muda completamente de opinião sobre algo importante...",
-        opcaoA: "Tudo bem, pessoas mudam, a vida é assim mesmo",
-        opcaoB: "Me incomoda, sinto que preciso entender o porquê"
-      },
-      {
-        situacao: "Os planos do final de semana mudaram de última hora...",
-        opcaoA: "Tranquilo, me adapto fácil, vamos ver o que rola",
-        opcaoB: "Fico frustrado(a), eu já tinha me organizado mentalmente"
-      },
-      {
-        situacao: "Você discute com alguém que ama pela manhã...",
-        opcaoA: "À tarde já esqueci, vida que segue",
-        opcaoB: "Fico remoendo, o peso permanece por dias"
-      },
-      {
-        situacao: "Precisa tomar uma decisão importante...",
-        opcaoA: "Penso no que vai fazer bem pra mim e pros outros envolvidos",
-        opcaoB: "Penso no que é certo, independente de como todos vão se sentir"
-      },
-      {
-        situacao: "Alguém te pede pra mudar de ideia sobre algo que você acredita...",
-        opcaoA: "Se fizer sentido, mudo sem problema",
-        opcaoB: "Preciso de argumentos muito fortes, não mudo fácil"
-      },
-      {
-        situacao: "Numa festa animada com música alta e muita gente...",
-        opcaoA: "Me deixo envolver pela energia do ambiente",
-        opcaoB: "Observo de forma mais distanciada, analiso o que está acontecendo"
-      },
-      {
-        situacao: "Quando lembra de algo doloroso do passado...",
-        opcaoA: "É só uma lembrança, não mexe muito comigo hoje",
-        opcaoB: "A emoção volta forte, como se fosse recente"
-      },
-      {
-        situacao: "Em relacionamentos, você tende a...",
-        opcaoA: "Priorizar a harmonia, ceder pra manter a paz",
-        opcaoB: "Priorizar a verdade, mesmo que gere atrito"
-      },
-      {
-        situacao: "Quando alguém pensa muito diferente de você...",
-        opcaoA: "Acho natural, cada um com sua visão",
-        opcaoB: "Me incomoda internamente, fico querendo mostrar meu ponto"
-      },
-      {
-        situacao: "Sua relação com mudanças na vida é...",
-        opcaoA: "Fluida, me adapto e sigo em frente",
-        opcaoB: "Difícil, preciso de tempo pra processar e aceitar"
-      }
-    ];
+var perguntasParte2 = [
+  { situacao: "Uma pessoa querida muda completamente de opiniao sobre algo importante...", opcaoA: "Tudo bem, pessoas mudam, a vida e assim mesmo", opcaoB: "Me incomoda, sinto que preciso entender o porque" },
+  { situacao: "Os planos do final de semana mudaram de ultima hora...", opcaoA: "Tranquilo, me adapto facil, vamos ver o que rola", opcaoB: "Fico frustrado(a), eu ja tinha me organizado mentalmente" },
+  { situacao: "Voce discute com alguem que ama pela manha...", opcaoA: "A tarde ja esqueci, vida que segue", opcaoB: "Fico remoendo, o peso permanece por dias" },
+  { situacao: "Precisa tomar uma decisao importante...", opcaoA: "Penso no que vai fazer bem pra mim e pros outros envolvidos", opcaoB: "Penso no que e certo, independente de como todos vao se sentir" },
+  { situacao: "Alguem te pede pra mudar de ideia sobre algo que voce acredita...", opcaoA: "Se fizer sentido, mudo sem problema", opcaoB: "Preciso de argumentos muito fortes, nao mudo facil" },
+  { situacao: "Numa festa animada com musica alta e muita gente...", opcaoA: "Me deixo envolver pela energia do ambiente", opcaoB: "Observo de forma mais distanciada, analiso o que esta acontecendo" },
+  { situacao: "Quando lembra de algo doloroso do passado...", opcaoA: "E so uma lembranca, nao mexe muito comigo hoje", opcaoB: "A emocao volta forte, como se fosse recente" },
+  { situacao: "Em relacionamentos, voce tende a...", opcaoA: "Priorizar a harmonia, ceder pra manter a paz", opcaoB: "Priorizar a verdade, mesmo que gere atrito" },
+  { situacao: "Quando alguem pensa muito diferente de voce...", opcaoA: "Acho natural, cada um com sua visao", opcaoB: "Me incomoda internamente, fico querendo mostrar meu ponto" },
+  { situacao: "Sua relacao com mudancas na vida e...", opcaoA: "Fluida, me adapto e sigo em frente", opcaoB: "Dificil, preciso de tempo pra processar e aceitar" }
+];
 
-    const temperamentos = {
-      sanguineo: {
-        nome: "SANGUÍNEO",
-        elemento: "Ar",
-        emoji: "🌬️",
-        estrutura: "Quente + Úmido",
-        descricao: "\"Você é como o Ar: expansivo, leve, envolvente. Sua energia preenche os ambientes e contagia quem está por perto.\"",
-        pontosFortres: [
-          "Comunicação natural e cativante",
-          "Otimismo contagiante",
-          "Facilidade em perdoar e seguir em frente",
-          "Criatividade e entusiasmo"
-        ],
-        pontosAtencao: [
-          "Tendência à inconstância e dispersão",
-          "Dificuldade em terminar o que começa",
-          "Pode ser superficial nas análises",
-          "Facilmente influenciado pelo ambiente"
-        ],
-        noAmor: "Você ama com intensidade no momento, é demonstrativo e precisa de novidade. Cuidado pra não confundir paixão passageira com amor profundo.",
-        frase: "\"A vida é uma festa, e eu sou a música que toca.\""
-      },
-      colerico: {
-        nome: "COLÉRICO",
-        elemento: "Fogo",
-        emoji: "🔥",
-        estrutura: "Quente + Seco",
-        descricao: "\"Você é como o Fogo: intenso, determinado, transformador. Sua presença aquece e ilumina, mas também pode queimar quem se aproxima sem cuidado.\"",
-        pontosFortres: [
-          "Liderança natural e decisão rápida",
-          "Resiliência e capacidade de se reerguer",
-          "Foco em resultados e execução",
-          "Coragem para enfrentar desafios"
-        ],
-        pontosAtencao: [
-          "Pode ser autoritário e impaciente",
-          "Dificuldade em ouvir opiniões contrárias",
-          "Tendência a atropelar sentimentos alheios",
-          "Precisa aprender a delegar e descansar"
-        ],
-        noAmor: "Você ama com fogo e intensidade, mas precisa cuidar pra não sufocar o outro. Aprenda que nem tudo é competição.",
-        frase: "\"Obstáculos são apenas combustível pro meu fogo.\""
-      },
-      melancolico: {
-        nome: "MELANCÓLICO",
-        elemento: "Terra",
-        emoji: "🌍",
-        estrutura: "Frio + Seco",
-        descricao: "\"Você é como a Terra: profundo, estável, marcado. Guarda dentro de si camadas de história e significado que poucos conseguem acessar.\"",
-        pontosFortres: [
-          "Profundidade emocional e intelectual",
-          "Lealdade inabalável",
-          "Capacidade de análise e prevenção",
-          "Sensibilidade artística e criativa"
-        ],
-        pontosAtencao: [
-          "Tendência ao pessimismo e autocrítica",
-          "Dificuldade em deixar o passado ir",
-          "Pode ser rígido e perfeccionista demais",
-          "Precisa praticar a gratidão"
-        ],
-        noAmor: "Você ama de forma profunda e leal, mas pode cobrar demais do outro. Lembre-se: imperfeição faz parte do humano.",
-        frase: "\"Nas minhas raízes, guardo todas as histórias que me trouxeram até aqui.\""
-      },
-      fleumatico: {
-        nome: "FLEUMÁTICO",
-        elemento: "Água",
-        emoji: "🌊",
-        estrutura: "Frio + Úmido",
-        descricao: "\"Você é como a Água: sereno, adaptável, profundo. Sua presença traz paz, mas no seu interior existe um oceano que poucos têm permissão de explorar.\"",
-        pontosFortres: [
-          "Diplomacia e capacidade de mediar conflitos",
-          "Paciência e constância emocional",
-          "Adaptabilidade às situações",
-          "Profundidade interior rica"
-        ],
-        pontosAtencao: [
-          "Tendência à passividade e procrastinação",
-          "Dificuldade em se posicionar e dizer não",
-          "Pode parecer indiferente ou distante",
-          "Precisa sair da zona de conforto"
-        ],
-        noAmor: "Você ama de forma estável e acolhedora, mas precisa expressar mais o que sente. O outro não é vidente.",
-        frase: "\"Na minha calmaria, existe uma profundidade que só revelo a quem merece.\""
-      }
-    };
+var temperamentos = {
+  sanguineo: { nome: "SANGUINEO", emoji: "🌬️", descricao: "Voce e como o Ar: expansivo, leve, envolvente. Sua energia preenche os ambientes e contagia quem esta por perto.", pontosFortes: ["Comunicacao natural e cativante", "Otimismo contagiante", "Facilidade em perdoar e seguir em frente", "Criatividade e entusiasmo"], pontosAtencao: ["Tendencia a inconstancia e dispersao", "Dificuldade em terminar o que comeca", "Pode ser superficial nas analises", "Facilmente influenciado pelo ambiente"], noAmor: "Voce ama com intensidade no momento, e demonstrativo e precisa de novidade. Cuidado pra nao confundir paixao passageira com amor profundo.", frase: "A vida e uma festa, e eu sou a musica que toca." },
+  colerico: { nome: "COLERICO", emoji: "🔥", descricao: "Voce e como o Fogo: intenso, determinado, transformador. Sua presenca aquece e ilumina, mas tambem pode queimar quem se aproxima sem cuidado.", pontosFortes: ["Lideranca natural e decisao rapida", "Resiliencia e capacidade de se reerguer", "Foco em resultados e execucao", "Coragem para enfrentar desafios"], pontosAtencao: ["Pode ser autoritario e impaciente", "Dificuldade em ouvir opinioes contrarias", "Tendencia a atropelar sentimentos alheios", "Precisa aprender a delegar e descansar"], noAmor: "Voce ama com fogo e intensidade, mas precisa cuidar pra nao sufocar o outro. Aprenda que nem tudo e competicao.", frase: "Obstaculos sao apenas combustivel pro meu fogo." },
+  melancolico: { nome: "MELANCOLICO", emoji: "🌍", descricao: "Voce e como a Terra: profundo, estavel, marcado. Guarda dentro de si camadas de historia e significado que poucos conseguem acessar.", pontosFortes: ["Profundidade emocional e intelectual", "Lealdade inabalavel", "Capacidade de analise e prevencao", "Sensibilidade artistica e criativa"], pontosAtencao: ["Tendencia ao pessimismo e autocritica", "Dificuldade em deixar o passado ir", "Pode ser rigido e perfeccionista demais", "Precisa praticar a gratidao"], noAmor: "Voce ama de forma profunda e leal, mas pode cobrar demais do outro. Lembre-se: imperfeicao faz parte do humano.", frase: "Nas minhas raizes, guardo todas as historias que me trouxeram ate aqui." },
+  fleumatico: { nome: "FLEUMATICO", emoji: "🌊", descricao: "Voce e como a Agua: sereno, adaptavel, profundo. Sua presenca traz paz, mas no seu interior existe um oceano que poucos tem permissao de explorar.", pontosFortes: ["Diplomacia e capacidade de mediar conflitos", "Paciencia e constancia emocional", "Adaptabilidade as situacoes", "Profundidade interior rica"], pontosAtencao: ["Tendencia a passividade e procrastinacao", "Dificuldade em se posicionar e dizer nao", "Pode parecer indiferente ou distante", "Precisa sair da zona de conforto"], noAmor: "Voce ama de forma estavel e acolhedora, mas precisa expressar mais o que sente. O outro nao e vidente.", frase: "Na minha calmaria, existe uma profundidade que so revelo a quem merece." }
+};
 
-    // ESTADO DO TESTE
-    let fase = 'intro';
-    let respostasParte1 = [];
-    let respostasParte2 = [];
-    let perguntaAtual = 0;
-    let dadosLead = {};
-    let resultadoCalculado = null;
+var fase = 'intro';
+var respostasParte1 = [];
+var respostasParte2 = [];
+var perguntaAtual = 0;
+var dadosLead = {};
+var resultadoCalculado = null;
 
-    // FUNÇÕES
-    function mostrarTela(telaId) {
-      document.querySelectorAll('.container').forEach(el => el.classList.add('hidden'));
-      document.getElementById(telaId).classList.remove('hidden');
-    }
+function mostrarTela(telaId) {
+  var telas = document.querySelectorAll('.container');
+  for (var i = 0; i < telas.length; i++) { telas[i].classList.add('hidden'); }
+  document.getElementById(telaId).classList.remove('hidden');
+}
 
-    function iniciarTeste() {
-      fase = 'parte1';
-      perguntaAtual = 0;
-      respostasParte1 = [];
-      mostrarTela('tela-perguntas');
-      atualizarPergunta();
-    }
+function iniciarTeste() {
+  fase = 'parte1';
+  perguntaAtual = 0;
+  respostasParte1 = [];
+  mostrarTela('tela-perguntas');
+  atualizarPergunta();
+}
 
-    function iniciarParte2() {
-      fase = 'parte2';
-      perguntaAtual = 0;
-      respostasParte2 = [];
-      mostrarTela('tela-perguntas');
-      atualizarPergunta();
-    }
+function iniciarParte2() {
+  fase = 'parte2';
+  perguntaAtual = 0;
+  respostasParte2 = [];
+  mostrarTela('tela-perguntas');
+  atualizarPergunta();
+}
 
-    function atualizarPergunta() {
-      const perguntas = fase === 'parte1' ? perguntasParte1 : perguntasParte2;
-      const pergunta = perguntas[perguntaAtual];
-      const parteNum = fase === 'parte1' ? 1 : 2;
+function atualizarPergunta() {
+  var perguntas = fase === 'parte1' ? perguntasParte1 : perguntasParte2;
+  var pergunta = perguntas[perguntaAtual];
+  var parteNum = fase === 'parte1' ? 1 : 2;
+  document.getElementById('parte-info').textContent = 'Parte ' + parteNum + ' de 2';
+  document.getElementById('pergunta-info').textContent = 'Pergunta ' + (perguntaAtual + 1) + ' de ' + perguntas.length;
+  document.getElementById('question-text').textContent = pergunta.situacao;
+  document.getElementById('option-a').textContent = pergunta.opcaoA;
+  document.getElementById('option-b').textContent = pergunta.opcaoB;
+  var progresso = fase === 'parte1' ? ((perguntaAtual + 1) / perguntas.length) * 50 : 50 + ((perguntaAtual + 1) / perguntas.length) * 50;
+  document.getElementById('progress-fill').style.width = progresso + '%';
+}
 
-      document.getElementById('parte-info').textContent = `Parte ${parteNum} de 2`;
-      document.getElementById('pergunta-info').textContent = `Pergunta ${perguntaAtual + 1} de ${perguntas.length}`;
-      document.getElementById('question-text').textContent = pergunta.situacao;
-      document.getElementById('option-a').textContent = pergunta.opcaoA;
-      document.getElementById('option-b').textContent = pergunta.opcaoB;
+function responder(opcao) {
+  if (fase === 'parte1') {
+    respostasParte1.push(opcao);
+    if (perguntaAtual < perguntasParte1.length - 1) { perguntaAtual++; atualizarPergunta(); }
+    else { mostrarTela('tela-transicao'); }
+  } else if (fase === 'parte2') {
+    respostasParte2.push(opcao);
+    if (perguntaAtual < perguntasParte2.length - 1) { perguntaAtual++; atualizarPergunta(); }
+    else { resultadoCalculado = calcularResultado(); mostrarTela('tela-captura'); }
+  }
+}
 
-      let progresso;
-      if (fase === 'parte1') {
-        progresso = ((perguntaAtual + 1) / perguntas.length) * 50;
-      } else {
-        progresso = 50 + ((perguntaAtual + 1) / perguntas.length) * 50;
-      }
-      document.getElementById('progress-fill').style.width = progresso + '%';
-    }
+function calcularResultado() {
+  var countA_P1 = 0, countA_P2 = 0;
+  for (var i = 0; i < respostasParte1.length; i++) { if (respostasParte1[i] === 'A') countA_P1++; }
+  for (var j = 0; j < respostasParte2.length; j++) { if (respostasParte2[j] === 'A') countA_P2++; }
+  var percentQuente = (countA_P1 / 10) * 100;
+  var percentSeco = ((10 - countA_P2) / 10) * 100;
+  var ehQuente = percentQuente >= 50;
+  var ehSeco = percentSeco >= 50;
+  var dominante, secundario;
+  if (ehQuente && !ehSeco) { dominante = 'sanguineo'; }
+  else if (ehQuente && ehSeco) { dominante = 'colerico'; }
+  else if (!ehQuente && ehSeco) { dominante = 'melancolico'; }
+  else { dominante = 'fleumatico'; }
+  var distQuente = Math.abs(percentQuente - 50);
+  var distSeco = Math.abs(percentSeco - 50);
+  if (distQuente <= distSeco) {
+    if (dominante === 'sanguineo') secundario = 'fleumatico';
+    else if (dominante === 'colerico') secundario = 'melancolico';
+    else if (dominante === 'melancolico') secundario = 'colerico';
+    else secundario = 'sanguineo';
+  } else {
+    if (dominante === 'sanguineo') secundario = 'colerico';
+    else if (dominante === 'colerico') secundario = 'sanguineo';
+    else if (dominante === 'melancolico') secundario = 'fleumatico';
+    else secundario = 'melancolico';
+  }
+  return { dominante: dominante, secundario: secundario, percentQuente: percentQuente, percentSeco: percentSeco };
+}
 
-    function responder(opcao) {
-      if (fase === 'parte1') {
-        respostasParte1.push(opcao);
-        if (perguntaAtual < perguntasParte1.length - 1) {
-          perguntaAtual++;
-          atualizarPergunta();
-        } else {
-          mostrarTela('tela-transicao');
-        }
-      } else if (fase === 'parte2') {
-        respostasParte2.push(opcao);
-        if (perguntaAtual < perguntasParte2.length - 1) {
-          perguntaAtual++;
-          atualizarPergunta();
-        } else {
-          // Calcula o resultado antes de mostrar a tela de captura
-          resultadoCalculado = calcularResultado();
-          mostrarTela('tela-captura');
-        }
-      }
-    }
+function formatarWhatsApp(valor) {
+  var numeros = valor.replace(/\D/g, '');
+  if (numeros.length <= 2) { return '(' + numeros; }
+  else if (numeros.length <= 7) { return '(' + numeros.slice(0,2) + ') ' + numeros.slice(2); }
+  else { return '(' + numeros.slice(0,2) + ') ' + numeros.slice(2,7) + '-' + numeros.slice(7,11); }
+}
 
-    function calcularResultado() {
-      const countA_P1 = respostasParte1.filter(r => r === 'A').length;
-      const countA_P2 = respostasParte2.filter(r => r === 'A').length;
-      
-      const percentQuente = (countA_P1 / 10) * 100;
-      const percentSeco = ((10 - countA_P2) / 10) * 100;
+function enviarLead(event) {
+  event.preventDefault();
+  var btnSubmit = document.getElementById('btn-ver-resultado');
+  var nome = document.getElementById('nome').value.trim();
+  var whatsapp = document.getElementById('whatsapp').value.trim();
+  dadosLead = { nome: nome, whatsapp: whatsapp };
+  btnSubmit.disabled = true;
+  btnSubmit.innerHTML = '<span class="loading-spinner"></span>Carregando...';
+  var resultado = temperamentos[resultadoCalculado.dominante];
+  var resultadoSec = temperamentos[resultadoCalculado.secundario];
+  var nomeCompleto = resultado.nome + '-' + resultadoSec.nome;
+  var dadosParaEnviar = { nome: nome, whatsapp: whatsapp, temperamento: nomeCompleto, dominante: resultado.nome, secundario: resultadoSec.nome, percentQuente: Math.round(resultadoCalculado.percentQuente) + '%', percentSeco: Math.round(resultadoCalculado.percentSeco) + '%', dataHora: new Date().toLocaleString('pt-BR') };
+  if (GOOGLE_SCRIPT_URL !== 'COLE_SUA_URL_AQUI') {
+    fetch(GOOGLE_SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(dadosParaEnviar) }).then(function() { mostrarResultado(); }).catch(function(error) { console.log('Erro:', error); mostrarResultado(); });
+  } else { mostrarResultado(); }
+  btnSubmit.disabled = false;
+  btnSubmit.innerHTML = 'Ver Meu Resultado';
+}
 
-      const ehQuente = percentQuente >= 50;
-      const ehSeco = percentSeco >= 50;
+function mostrarResultado() {
+  var resultado = temperamentos[resultadoCalculado.dominante];
+  var resultadoSec = temperamentos[resultadoCalculado.secundario];
+  document.getElementById('nome-usuario').textContent = dadosLead.nome;
+  document.getElementById('result-emoji').textContent = resultado.emoji;
+  document.getElementById('result-name').textContent = resultado.nome;
+  document.getElementById('result-secondary').textContent = 'com tracos de ' + resultadoSec.nome + ' ' + resultadoSec.emoji;
+  var tagNome = resultado.nome.charAt(0) + resultado.nome.slice(1).toLowerCase() + '-' + resultadoSec.nome.charAt(0) + resultadoSec.nome.slice(1).toLowerCase();
+  document.getElementById('combinacao-tag').textContent = tagNome;
+  document.getElementById('result-description').textContent = resultado.descricao;
+  var eixo1Fill = document.getElementById('eixo1-fill');
+  var eixo1Percent = document.getElementById('eixo1-percent');
+  eixo1Fill.style.width = resultadoCalculado.percentQuente + '%';
+  eixo1Fill.className = 'eixo-bar-fill ' + (resultadoCalculado.percentQuente >= 50 ? 'quente' : 'frio');
+  eixo1Percent.textContent = resultadoCalculado.percentQuente >= 50 ? Math.round(resultadoCalculado.percentQuente) + '% Quente' : Math.round(100-resultadoCalculado.percentQuente) + '% Frio';
+  var eixo2Fill = document.getElementById('eixo2-fill');
+  var eixo2Percent = document.getElementById('eixo2-percent');
+  eixo2Fill.style.width = resultadoCalculado.percentSeco + '%';
+  eixo2Fill.className = 'eixo-bar-fill ' + (resultadoCalculado.percentSeco >= 50 ? 'seco' : 'umido');
+  eixo2Percent.textContent = resultadoCalculado.percentSeco >= 50 ? Math.round(resultadoCalculado.percentSeco) + '% Seco' : Math.round(100-resultadoCalculado.percentSeco) + '% Umido';
+  var fortesUl = document.getElementById('result-fortes');
+  fortesUl.innerHTML = '';
+  for (var i = 0; i < resultado.pontosFortes.length; i++) { var li = document.createElement('li'); li.textContent = resultado.pontosFortes[i]; fortesUl.appendChild(li); }
+  var atencaoUl = document.getElementById('result-atencao');
+  atencaoUl.innerHTML = '';
+  for (var j = 0; j < resultado.pontosAtencao.length; j++) { var li2 = document.createElement('li'); li2.textContent = resultado.pontosAtencao[j]; atencaoUl.appendChild(li2); }
+  document.getElementById('result-amor').textContent = resultado.noAmor;
+  document.getElementById('result-frase').textContent = resultado.frase;
+  var nomeCompleto = resultado.nome + '-' + resultadoSec.nome;
+  var mensagem = encodeURIComponent('Ola Jaya! Sou ' + dadosLead.nome + ', fiz o teste de temperamentos e meu resultado foi ' + nomeCompleto + '. Quero entender mais sobre como isso afeta meus relacionamentos.');
+  document.getElementById('whatsapp-link').href = 'https://wa.me/5561992634557?text=' + mensagem;
+  mostrarTela('tela-resultado');
+}
 
-      let dominante, secundario;
-      
-      if (ehQuente && !ehSeco) {
-        dominante = 'sanguineo';
-      } else if (ehQuente && ehSeco) {
-        dominante = 'colerico';
-      } else if (!ehQuente && ehSeco) {
-        dominante = 'melancolico';
-      } else {
-        dominante = 'fleumatico';
-      }
+function reiniciar() {
+  fase = 'intro';
+  respostasParte1 = [];
+  respostasParte2 = [];
+  perguntaAtual = 0;
+  dadosLead = {};
+  resultadoCalculado = null;
+  document.getElementById('nome').value = '';
+  document.getElementById('whatsapp').value = '';
+  mostrarTela('tela-intro');
+}
 
-      const distQuente = Math.abs(percentQuente - 50);
-      const distSeco = Math.abs(percentSeco - 50);
-
-      if (distQuente <= distSeco) {
-        if (dominante === 'sanguineo') secundario = 'fleumatico';
-        else if (dominante === 'colerico') secundario = 'melancolico';
-        else if (dominante === 'melancolico') secundario = 'colerico';
-        else secundario = 'sanguineo';
-      } else {
-        if (dominante === 'sanguineo') secundario = 'colerico';
-        else if (dominante === 'colerico') secundario = 'sanguineo';
-        else if (dominante === 'melancolico') secundario = 'fleumatico';
-        else secundario = 'melancolico';
-      }
-
-      return {
-        dominante,
-        secundario,
-        percentQuente,
-        percentSeco
-      };
-    }
-
-    function formatarWhatsApp(valor) {
-      // Remove tudo que não é número
-      let numeros = valor.replace(/\D/g, '');
-      
-      // Formata conforme digita
-      if (numeros.length <= 2) {
-        return `(${numeros}`;
-      } else if (numeros.length <= 7) {
-        return `(${numeros.slice(0,2)}) ${numeros.slice(2)}`;
-      } else {
-        return `(${numeros.slice(0,2)}) ${numeros.slice(2,7)}-${numeros.slice(7,11)}`;
-      }
-    }
-
-    // Máscara do WhatsApp
-    document.getElementById('whatsapp').addEventListener('input', function(e) {
-      e.target.value = formatarWhatsApp(e.target.value);
-    });
-
-    async function enviarLead(event) {
-      event.preventDefault();
-      
-      const btnSubmit = document.getElementById('btn-ver-resultado');
-      const nome = document.getElementById('nome').value.trim();
-      const whatsapp = document.getElementById('whatsapp').value.trim();
-      
-      // Salva os dados do lead
-      dadosLead = { nome, whatsapp };
-      
-      // Mostra loading
-      btnSubmit.disabled = true;
-      btnSubmit.innerHTML = '<span class="loading-spinner"></span>Carregando...';
-
-      // Prepara dados para enviar
-      const resultado = temperamentos[resultadoCalculado.dominante];
-      const resultadoSec = temperamentos[resultadoCalculado.secundario];
-      const nomeCompleto = `${resultado.nome}-${resultadoSec.nome}`;
-
-      const dadosParaEnviar = {
-        nome: nome,
-        whatsapp: whatsapp,
-        temperamento: nomeCompleto,
-        dominante: resultado.nome,
-        secundario: resultadoSec.nome,
-        percentQuente: Math.round(resultadoCalculado.percentQuente) + '%',
-        percentSeco: Math.round(resultadoCalculado.percentSeco) + '%',
-        dataHora: new Date().toLocaleString('pt-BR')
-      };
-
-      try {
-        // Envia para o Google Sheets
-        if (GOOGLE_SCRIPT_URL !== 'COLE_SUA_URL_AQUI') {
-          await fetch(GOOGLE_SCRIPT_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(dadosParaEnviar)
-          });
-        }
-      } catch (error) {
-        console.log('Erro ao enviar lead:', error);
-        // Continua mesmo se der erro - não trava o usuário
-      }
-
-      // Mostra o resultado
-      mostrarResultado();
-      
-      // Restaura o botão
-      btnSubmit.disabled = false;
-      btnSubmit.innerHTML = 'Ver Meu Resultado';
-    }
-
-    function mostrarResultado() {
-      const { dominante, secundario, percentQuente, percentSeco } = resultadoCalculado;
-      const resultado = temperamentos[dominante];
-      const resultadoSec = temperamentos[secundario];
-
-      // Mostra o nome do usuário
-      document.getElementById('nome-usuario').textContent = dadosLead.nome;
-
-      document.getElementById('result-emoji').textContent = resultado.emoji;
-      document.getElementById('result-name').textContent = resultado.nome;
-      document.getElementById('result-secondary').textContent = `com traços de ${resultadoSec.nome} ${resultadoSec.emoji}`;
-      document.getElementById('combinacao-tag').textContent = `${resultado.nome.charAt(0)}${resultado.nome.slice(1).toLowerCase()}-${resultadoSec.nome.charAt(0)}${resultadoSec.nome.slice(1).toLowerCase()}`;
-      document.getElementById('result-description').textContent = resultado.descricao;
-
-      // Eixos com porcentagens
-      const eixo1Fill = document.getElementById('eixo1-fill');
-      const eixo1Percent = document.getElementById('eixo1-percent');
-      eixo1Fill.style.width = percentQuente + '%';
-      eixo1Fill.className = 'eixo-bar-fill ' + (percentQuente >= 50 ? 'quente' : 'frio');
-      eixo1Percent.textContent = percentQuente >= 50 ? `${Math.round(percentQuente)}% Quente` : `${Math.round(100-percentQuente)}% Frio`;
-
-      const eixo2Fill = document.getElementById('eixo2-fill');
-      const eixo2Percent = document.getElementById('eixo2-percent');
-      eixo2Fill.style.width = percentSeco + '%';
-      eixo2Fill.className = 'eixo-bar-fill ' + (percentSeco >= 50 ? 'seco' : 'umido');
-      eixo2Percent.textContent = percentSeco >= 50 ? `${Math.round(percentSeco)}% Seco` : `${Math.round(100-percentSeco)}% Úmido`;
-
-      // Pontos fortes
-      const fortesUl = document.getElementById('result-fortes');
-      fortesUl.innerHTML = '';
-      resultado.pontosFortres.forEach(ponto => {
-        const li = document.createElement('li');
-        li.textContent = ponto;
-        fortesUl.appendChild(li);
-      });
-
-      // Pontos de atenção
-      const atencaoUl = document.getElementById('result-atencao');
-      atencaoUl.innerHTML = '';
-      resultado.pontosAtencao.forEach(ponto => {
-        const li = document.createElement('li');
-        li.textContent = ponto;
-        atencaoUl.appendChild(li);
-      });
-
-      document.getElementById('result-amor').textContent = resultado.noAmor;
-      document.getElementById('result-frase').textContent = resultado.frase;
-
-      // Link do WhatsApp - agora inclui o nome do lead
-      const nomeCompleto = `${resultado.nome}-${resultadoSec.nome}`;
-      const mensagem = encodeURIComponent(`Olá Jaya! Sou ${dadosLead.nome}, fiz o teste de temperamentos e meu resultado foi ${nomeCompleto}. Quero entender mais sobre como isso afeta meus relacionamentos.`);
-      document.getElementById('whatsapp-link').href = `https://wa.me/5561992634557?text=${mensagem}`;
-
-      mostrarTela('tela-resultado');
-    }
-
-    function reiniciar() {
-      fase = 'intro';
-      respostasParte1 = [];
-      respostasParte2 = [];
-      perguntaAtual = 0;
-      dadosLead = {};
-      resultadoCalculado = null;
-      document.getElementById('nome').value = '';
-      document.getElementById('whatsapp').value = '';
-      mostrarTela('tela-intro');
-    }
-  </script>
-
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('btn-iniciar').addEventListener('click', iniciarTeste);
+  document.getElementById('btn-opcao-a').addEventListener('click', function() { responder('A'); });
+  document.getElementById('btn-opcao-b').addEventListener('click', function() { responder('B'); });
+  document.getElementById('btn-continuar').addEventListener('click', iniciarParte2);
+  document.getElementById('lead-form').addEventListener('submit', enviarLead);
+  document.getElementById('whatsapp').addEventListener('input', function(e) { e.target.value = formatarWhatsApp(e.target.value); });
+  document.getElementById('btn-reiniciar').addEventListener('click', reiniciar);
+});
+</script>
 </body>
 </html>
